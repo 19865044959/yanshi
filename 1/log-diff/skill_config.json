@@ -1,0 +1,17 @@
+{
+  "skill_type": "log_analysis",
+  "activation_patterns": [
+    "日志对比",
+    "查日志",
+    "分析请求",
+    "日志diff",
+    "日志diff",
+    "对比日志",
+    "异常分析",
+    "请求追踪",
+    "链路分析",
+    "性能分析",
+    "diff.*log",
+    "log.*diff"
+  ]
+}

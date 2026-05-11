@@ -1,0 +1,9 @@
+{
+  "name": "log-diff",
+  "version": "1.0.0",
+  "entry_prompt": "prompt.md",
+  "legacy_prompt": "SKILL.md",
+  "scripts_dir": "scripts",
+  "resources_dir": "resources",
+  "compatibility_mode": "cursor-skill-md-kept"
+}

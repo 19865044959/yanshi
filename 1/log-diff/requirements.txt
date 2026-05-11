@@ -1,0 +1,2 @@
+# log-diff skill 依赖
+# 本项目仅使用 Python 标准库，无外部依赖

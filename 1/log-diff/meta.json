@@ -1,0 +1,13 @@
+{
+  "name": "log-diff",
+  "version": "1.0",
+  "type": "skill",
+  "description": "日志对比分析工具，输入UUID检索请求执行链路，对比基线输出异常报告。支持 UUID 追踪、执行链路还原、基线对比、异常检测。",
+  "abilityOpen": false,
+  "tools": [
+    "log_diff"
+  ],
+  "tool_log_diff_type": "python_script",
+  "tool_log_diff_lib_name": "skill_tool_registration.py",
+  "tool_log_diff_entry": "LogDiffToolInstanceCreator"
+}

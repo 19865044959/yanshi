@@ -1,0 +1,277 @@
+================================================================================
+  RustSysAgent — AI按照AGENTS.md规范生成的分层结构化日志 演示
+  文件: logs/layer_log_20260509.jsonl (新增)
+  说明: 将现有日志(api_log/tool_log)与新增层级日志(layer_log)并列展示
+  请求场景: "我明天要从北京去上海，帮我查一下天气和高铁"
+  生成时间: 2026-05-11
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 演示说明:                                                                   │
+│                                                                             │
+│ 左侧  → 原有的 api_log / tool_log (只记录API调用，无架构分层信息)             │
+│ 右侧  → 新增的 layer_log (按AGENTS.md §1.2统一格式，覆盖全部6层)             │
+│                                                                             │
+│ 核心改进: 原有日志缺失分层信息、无uuid、不区分entry/exit/error                │
+│          新日志补齐了所有这些关键字段，使log-diff成为可能                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+  L1 — Gateway 层 (ws_gateway.rs)
+  边界: 外部WebSocket → 内部InternalMessage
+================================================================================
+
+──────────────────────────────────────────────────────────────────────────────
+[原有日志 - 无]  这一层原来完全没有结构化日志，只有 tracing::info!() 打在 stdout
+──────────────────────────────────────────────────────────────────────────────
+
+2026-05-09 10:59:58  [入站] ★ WebSocket 连接请求接收
+2026-05-09 10:59:58  [入站] 路径: /sysa/ws/v1/ai
+2026-05-09 10:59:58  [入站] ★ 新 WebSocket 连接建立
+2026-05-09 10:59:58  [入站]   connection_id: ws-a1b2c3d4
+2026-05-09 11:00:00  [入站] ★ 收到 WebSocket 文本消息
+2026-05-09 11:00:00  [入站]   消息长度: 847 字符
+2026-05-09 11:00:00  [入站] ★ 消息解析成功
+2026-05-09 11:00:00  [入站]   - user_name: cxl001
+2026-05-09 11:00:00  [入站]   - session_id: sess-001
+2026-05-09 11:00:00  [入站]   - input_text: 我明天要从北京去上海，帮我查一下天气和高铁...
+
+──────────────────────────────────────────────────────────────────────────────
+[新增 layer_log]  按AGENTS.md §2.2 L1 规范埋点
+──────────────────────────────────────────────────────────────────────────────
+
+{"ts":"2026-05-09T11:00:00.100","level":"INFO","layer":"gateway","module":"ws_gateway","function":"handle_socket","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"MessageType":"TaskAssignment","UserName":"cxl001","UserInputText":"我明天要从北京去上海，帮我查一下天气和高铁","HeaderUUID":"ws-demo-20260509-001","ClientSessionId":"client-sess-042"},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:00.350","level":"INFO","layer":"gateway","module":"ws_gateway","function":"handle_socket","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":0.25,"input":null,"output":{"connection_id":"ws-a1b2c3d4","user_name":"cxl001","session_id":"sess-001","input_text_len":42,"metadata_keys":["app_name","user_intent","client_session_id","ws_header_uuid","ws_event_timestamp"]},"error":"","stack":""}
+
+================================================================================
+  L2 — MessageBus 层 (queue_manager.rs)
+  边界: 入站插件 → 消息队列 → 输入处理器
+================================================================================
+
+──────────────────────────────────────────────────────────────────────────────
+[原有日志 - 无]  MessageBus 完全没有结构化日志
+──────────────────────────────────────────────────────────────────────────────
+
+(无输出)
+
+──────────────────────────────────────────────────────────────────────────────
+[新增 layer_log]  按AGENTS.md §2.2 L2 规范埋点
+──────────────────────────────────────────────────────────────────────────────
+
+{"ts":"2026-05-09T11:00:00.351","level":"INFO","layer":"message_bus","module":"queue_manager","function":"push_input","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"sender":"gateway","connection_id":"ws-a1b2c3d4","queue_type":"input"},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:00.352","level":"INFO","layer":"message_bus","module":"queue_manager","function":"push_input","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":0.001,"input":null,"output":{"queue_depth":1,"queued":true},"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:00.450","level":"INFO","layer":"message_bus","module":"handler_chain","function":"process_next","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"handler":"AgentFlowIngressHandler","queue_depth":1},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:00.451","level":"INFO","layer":"message_bus","module":"handler_chain","function":"process_next","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":0.001,"input":null,"output":{"forwarded_to":"orchestrator","workflow_mode":"skill_selection"},"error":"","stack":""}
+
+================================================================================
+  L3 — Orchestrator 层 (executor.rs / scheduler.rs)
+  边界: 工作流调度 → 节点选择 → 并行/串行执行
+================================================================================
+
+──────────────────────────────────────────────────────────────────────────────
+[原有日志 - 无]  Orchestrator 的工作流解析、节点调度完全没有结构化日志
+──────────────────────────────────────────────────────────────────────────────
+
+(无输出)
+
+──────────────────────────────────────────────────────────────────────────────
+[新增 layer_log]  按AGENTS.md §2.2 L3 规范埋点
+──────────────────────────────────────────────────────────────────────────────
+
+{"ts":"2026-05-09T11:00:00.500","level":"INFO","layer":"orchestrator","module":"executor","function":"execute_workflow","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"workflow_id":"skill_selection_workflow","workflow_mode":"skill_selection","trigger_input":"我明天要从北京去上海，帮我查一下天气和高铁"},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:00.520","level":"INFO","layer":"orchestrator","module":"scheduler","function":"get_runnable_nodes","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":0.020,"input":null,"output":{"runnable_nodes":["skill_selection_node"],"blocked_nodes":[],"total_nodes":7,"parallelizable":false},"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:00.521","level":"INFO","layer":"orchestrator","module":"executor","function":"spawn_node","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"node_id":"skill_selection_node","node_type":"coordinator","command":"python3","working_dir":"agents/skills/gather"},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:01.200","level":"INFO","layer":"orchestrator","module":"executor","function":"spawn_node","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":679.0,"input":null,"output":{"node_instance_id":"node-inst-7f3a","selected_skills":["weather-query","train-ticket-search"],"confidence":0.95},"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:01.201","level":"INFO","layer":"orchestrator","module":"scheduler","function":"get_runnable_nodes","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":0.001,"input":null,"output":{"runnable_nodes":["weather_query_node","train_node"],"blocked_nodes":["gather_node"],"total_nodes":7,"parallelizable":true},"error":"","stack":""}
+
+================================================================================
+  L4 — Node 层: train-ticket-search (Python 独立进程)
+  边界: Orchestrator → Node stdin → Node stdout → Orchestrator
+================================================================================
+
+──────────────────────────────────────────────────────────────────────────────
+[原有 tool_log]  只记录 skill 调用开始/完成，无 uuid，无分层
+──────────────────────────────────────────────────────────────────────────────
+
+{"ts":"2026-05-09T11:00:01.500","level":"INFO","module":"aggregate_search","function":"aggregate","event":"call_start","input":{"keywords":["北京到上海 高铁","2026-05-12 高铁 时刻表"],"client":"<http_client.RequestsHttpClient>","search_type":"交通出行","search_mode":"Balanced"},"output_summary":{},"latency_ms":null,"success":null,"error":""}
+
+{"ts":"2026-05-09T11:00:11.800","level":"ERROR","module":"aggregate_search","function":"aggregate","event":"call_complete","input":{"keywords":["北京到上海 高铁","2026-05-12 高铁 时刻表"],"search_type":"交通出行"},"output_summary":{"success":false,"engine":"zhipu_std","items":0},"latency_ms":10279.5,"success":false,"error":"HTTPSConnectionPool(host='open.bigmodel.cn', port=443): Read timed out."}
+
+──────────────────────────────────────────────────────────────────────────────
+[新增 layer_log]  按AGENTS.md §2.2 L4 规范埋点 (Python节点模板)
+──────────────────────────────────────────────────────────────────────────────
+
+{"ts":"2026-05-09T11:00:01.202","level":"INFO","layer":"node","module":"train-ticket-search","function":"main","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"node_id":"train_node","port":"user_input","data":"我明天要从北京去上海，帮我查一下天气和高铁","msg_type":"input"},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:01.203","level":"INFO","layer":"node","module":"train-ticket-search","function":"search_trains","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"from":"北京","to":"上海","date":"2026-05-12","search_type":"高铁优先","max_results":10},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:11.801","level":"ERROR","layer":"node","module":"train-ticket-search","function":"search_trains","event":"layer_error","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":10598.0,"input":{"from":"北京","to":"上海","date":"2026-05-12","engine":"zhipu_std"},"output":null,"error":"HTTPSConnectionPool(host='open.bigmodel.cn', port=443): Read timed out. (read timeout=10)","stack":"Traceback (most recent call last):\n  File \"run_train_search.py\", line 45, in search_trains\n    response = uds_client.call(\"aggregate_search\", params)\n  File \"uds_client.py\", line 92, in call\n    raise UdsTimeoutError(f\"Request timed out after {timeout}s\")..."}
+
+{"ts":"2026-05-09T11:00:11.802","level":"INFO","layer":"node","module":"train-ticket-search","function":"search_trains","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"from":"北京","to":"上海","date":"2026-05-12","engine":"baidu","fallback_reason":"zhipu_std timeout"},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:14.500","level":"INFO","layer":"node","module":"train-ticket-search","function":"search_trains","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":2698.0,"input":null,"output":{"success":true,"engine":"baidu","train_count":15,"sample_results":["G1 北京南-上海虹桥 09:00-13:28","G3 北京南-上海 10:00-14:28","G5 北京南-上海虹桥 11:00-15:25"]},"error":"","stack":""}
+
+──────────────────────────────────────────────────────────────────────────────
+[关键对比]: 原有tool_log只看到"失败了"，不知道为什么。新layer_log能看到:
+  1. entry参数 (from=北京, to=上海, engine=zhipu_std)
+  2. error详情 (timeout + 完整stack trace)
+  3. 自动降级 (engine=baidu, fallback_reason=zhipu_std timeout)
+  4. exit结果 (降级后成功, 2698ms)
+  → log-diff 可以精确对比: ①多了降级步骤 ②耗时从基线2000ms涨到2698ms
+──────────────────────────────────────────────────────────────────────────────
+
+================================================================================
+  L4 — Node 层: weather-query (Python 独立进程)
+  边界: Orchestrator → Node stdin → Node stdout → Orchestrator
+================================================================================
+
+{"ts":"2026-05-09T11:00:14.600","level":"INFO","layer":"node","module":"weather-query","function":"main","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"node_id":"weather_query_node","port":"user_input","data":"我明天要从北京去上海，帮我查一下天气和高铁","msg_type":"input"},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:14.601","level":"INFO","layer":"node","module":"weather-query","function":"run_weather_search","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"city":"北京","time_range":"2026-05-12","query_type":"weather"},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:19.860","level":"ERROR","layer":"node","module":"weather-query","function":"run_weather_search","event":"layer_error","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":5259.0,"input":{"city":"北京","time_range":"2026-05-12","engine":"zhipu_std"},"output":null,"error":"Your account has insufficient balance","stack":"Traceback (most recent call last):\n  File \"run_weather_search.py\", line 102, in run_weather_search\n    result = api_client.call_weather_api(location, time_range)\n  File \"api_request.py\", line 67, in call_weather_api\n    raise AccountBalanceError(\"Your account has insufficient balance\")"}
+
+{"ts":"2026-05-09T11:00:19.861","level":"INFO","layer":"node","module":"weather-query","function":"run_weather_search","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"city":"北京","time_range":"2026-05-12","engine":"baidu","fallback_reason":"zhipu_std insufficient balance"},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:23.960","level":"INFO","layer":"node","module":"weather-query","function":"run_weather_search","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":4099.0,"input":null,"output":{"success":true,"engine":"baidu","location":{"name":"北京"},"daily":[{"date":"2026-05-12","high":"29°C","low":"16°C","text_day":"多云转晴","text_night":"多云"}],"time_range":["2026-05-12","2026-05-12"]},"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:23.961","level":"INFO","layer":"node","module":"weather-query","function":"main","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":9361.0,"input":null,"output":{"port":"skill_result","result_summary":"北京5月12日多云转晴 29°C/16°C","raw_len":245},"error":"","stack":""}
+
+================================================================================
+  L5 — DataBus 层 (databus/client.rs)
+  边界: Node → DataBus put/get → 其他Node
+================================================================================
+
+{"ts":"2026-05-09T11:00:23.970","level":"INFO","layer":"databus","module":"databus_client","function":"put","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"namespace":"sess-001","key":"response_sess-001_weather_query","ttl_secs":300},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:23.972","level":"INFO","layer":"databus","module":"databus_client","function":"put","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":2.0,"input":null,"output":{"status":"success","key":"response_sess-001_weather_query","value_len":245},"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:24.000","level":"INFO","layer":"databus","module":"databus_client","function":"put","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"namespace":"sess-001","key":"response_sess-001_train_ticket","ttl_secs":300},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:24.001","level":"INFO","layer":"databus","module":"databus_client","function":"put","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":1.0,"input":null,"output":{"status":"success","key":"response_sess-001_train_ticket","value_len":512},"error":"","stack":""}
+
+================================================================================
+  L5 — LLM 插件层 (uds/server/llm_server.rs)
+  边界: Gather Node → UDS → LLM API → 响应总结
+================================================================================
+
+──────────────────────────────────────────────────────────────────────────────
+[原有 api_log]  记录了LLM调用，但无分层、无关联、无法对应到是哪次请求
+──────────────────────────────────────────────────────────────────────────────
+
+{"ts":"2026-05-09T11:00:25.000","level":"INFO","module":"aggregate_search","function":"aggregate","event":"api_request","input":{"method":"FETCH","engine":"baidu","query":"2026年5月12日 北京天气 气温","timeout_s":5,"domain_filters":{}},"output_summary":{},"latency_ms":null,"success":null,"error":""}
+
+{"ts":"2026-05-09T11:00:28.150","level":"INFO","module":"aggregate_search","function":"aggregate","event":"api_response","input":{"method":"FETCH","engine":"baidu","query":"2026年5月12日 北京天气 气温"},"output_summary":{"success":true,"items":18,"engine":"baidu"},"latency_ms":3150.0,"success":true,"error":""}
+
+──────────────────────────────────────────────────────────────────────────────
+[新增 layer_log]  补全了uuid，可追溯到原始请求
+──────────────────────────────────────────────────────────────────────────────
+
+{"ts":"2026-05-09T11:00:24.100","level":"INFO","layer":"plugin","module":"llm_plugin","function":"create_task","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"model":"gpt-4","max_tokens":2048,"prompt_len":1850,"node_id":"gather_node"},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:25.000","level":"INFO","layer":"plugin","module":"aggregate_search","function":"aggregate","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"method":"FETCH","engine":"baidu","query":"2026年5月12日 北京天气 气温","timeout_s":5},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:28.150","level":"INFO","layer":"plugin","module":"aggregate_search","function":"aggregate","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":3150.0,"input":null,"output":{"success":true,"engine":"baidu","items":18,"top_result":"北京2026年5月12日多云..."},"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:29.500","level":"INFO","layer":"plugin","module":"llm_plugin","function":"create_task","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":5400.0,"input":null,"output":{"status":"success","tokens_used":1250,"finish_reason":"stop","response_preview":"根据查询结果，明天（5月12日）北京天气多云转晴..."},"error":"","stack":""}
+
+================================================================================
+  L6 — Outbound 层 (ws_gateway.rs build_aisf_user_output_response)
+  边界: 内部ResponseMessage → 外部WebSocket JSON
+================================================================================
+
+{"ts":"2026-05-09T11:00:29.600","level":"INFO","layer":"gateway","module":"ws_gateway","function":"build_response","event":"layer_entry","uuid":"ws-demo-20260509-001","session_id":"sess-001","input":{"message_type":"UserOutput","stream_status":"Complete","user_output_text_len":850},"output":null,"error":"","stack":""}
+
+{"ts":"2026-05-09T11:00:29.605","level":"INFO","layer":"gateway","module":"ws_gateway","function":"send_response","event":"layer_exit","uuid":"ws-demo-20260509-001","session_id":"sess-001","duration_ms":5.0,"input":null,"output":{"sent":true,"connection_id":"ws-a1b2c3d4","task_id":"ws-demo-20260509-001_0","message_type":"UserTask"},"error":"","stack":""}
+
+================================================================================
+  全链路汇总
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  UUID: ws-demo-20260509-001                                                  │
+│  用户: cxl001                                                                │
+│  输入: 我明天要从北京去上海，帮我查一下天气和高铁                                │
+│                                                                              │
+│  ┌──────────────┬──────────┬──────────┬──────────┬────────────────────────┐  │
+│  │ 层次          │ 模块      │ entry    │ exit     │ 异常                   │  │
+│  ├──────────────┼──────────┼──────────┼──────────┼────────────────────────┤  │
+│  │ L1 Gateway   │ ws_gate  │ 11:00:00 │ 11:00:00 │ —                      │  │
+│  │ L2 MsgBus    │ queue    │ 11:00:00 │ 11:00:00 │ —                      │  │
+│  │ L2 MsgBus    │ handler  │ 11:00:00 │ 11:00:00 │ —                      │  │
+│  │ L3 Orchestr  │ executor │ 11:00:00 │ —        │ —                      │  │
+│  │ L3 Orchestr  │ scheduler│ —        │ 11:00:00 │ —                      │  │
+│  │ L3 Orchestr  │ spawn    │ 11:00:00 │ 11:00:01 │ —                      │  │
+│  │ L3 Orchestr  │ scheduler│ —        │ 11:00:01 │ —                      │  │
+│  │ L4 Node      │ train    │ 11:00:01 │ 11:00:14 │ 11:00:11 zhipu超时     │  │
+│  │ L4 Node      │ train子  │ 11:00:01 │ —        │ —                      │  │
+│  │ L4 Node      │ train降级│ 11:00:11 │ 11:00:14 │ —                      │  │
+│  │ L4 Node      │ weather  │ 11:00:14 │ 11:00:23 │ 11:00:19 余额不足      │  │
+│  │ L4 Node      │ weather子│ 11:00:14 │ —        │ —                      │  │
+│  │ L4 Node      │ weath降级│ 11:00:19 │ 11:00:23 │ —                      │  │
+│  │ L5 DataBus   │ put(w)   │ 11:00:23 │ 11:00:23 │ —                      │  │
+│  │ L5 DataBus   │ put(t)   │ 11:00:24 │ 11:00:24 │ —                      │  │
+│  │ L5 Plugin    │ llm      │ 11:00:24 │ 11:00:29 │ —                      │  │
+│  │ L5 Plugin    │ search   │ 11:00:25 │ 11:00:28 │ —                      │  │
+│  │ L6 Gateway   │ response │ 11:00:29 │ 11:00:29 │ —                      │  │
+│  └──────────────┴──────────┴──────────┴──────────┴────────────────────────┘  │
+│                                                                              │
+│  总步骤: 19 (9 entry + 8 exit + 2 error)                                    │
+│  总耗时: 29505ms (29.5秒)                                                    │
+│  异常数: 2 (均自动降级恢复)                                                   │
+│  覆盖率: 6/6 层全部覆盖                                                       │
+│  uuid透传: 19/19 全部一致 ✓                                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+  对比: 现有日志 vs 新分层日志
+================================================================================
+
+┌────────────────────┬─────────────────────────────┬──────────────────────────┐
+│ 能力                │ 现有日志                     │ 新分层日志                │
+│                    │ (api_log + tool_log)        │ (layer_log)              │
+├────────────────────┼─────────────────────────────┼──────────────────────────┤
+│ 架构分层可见性      │ ✗ 看不到层次                 │ ✓ L1-L6 清楚标注        │
+│ 请求追踪(uuid)      │ ✗ 没有                      │ ✓ 全链路透传             │
+│ 入口/出口区分        │ ✗ 只有 api_request/response │ ✓ entry/exit/error 三种 │
+│ 异常归因             │ ✗ 只知道失败了               │ ✓ 失败原因+stack+降级链  │
+│ 耗时关联             │ ✗ 碎片化                     │ ✓ 每个边界独立计时       │
+│ 跨层对比             │ ✗ 不可行                     │ ✓ 按层聚合对比           │
+│ log-diff可用性       │ ✗ 无法使用                   │ ✓ 直接可用               │
+│ 基线保存             │ ✗ 没有机制                   │ ✓ uuid即基线key          │
+│ 完整性校验           │ ✗ 不知道丢没丢               │ ✓ entry/exit自动配对检查 │
+└────────────────────┴─────────────────────────────┴──────────────────────────┘
+
+================================================================================
+  log-diff skill 对此日志的分析效果
+================================================================================
+
+假设执行:
+  $ python scripts/python/run_log_diff.py ws-demo-20260509-001 \
+      --baseline logs/baseline/normal_trace.json
+
+将自动输出:
+
+  ✓ uuid 连续性检查: 通过 (19/19 条记录 uuid 一致)
+  ✓ 层次覆盖检查: 通过 (覆盖 L1/L2/L3/L4/L5/L6 共6层)
+  ✓ 事件配对检查: 通过 (9 entry 对应 9 exit/error, 无孤立事件)
+  ✓ 异常检测:
+      - [L4] train-ticket-search zhipu_std 超时 10598ms > 阈值 3000ms
+      - [L4] weather-query zhipu_std 余额不足 → 自动降级 baidu
+  ✓ 基线对比:
+      - 步骤数: 当前 19 vs 基线 15 (+4 条降级步骤)
+      - 总耗时: 当前 29505ms vs 基线 18500ms (+59%)
+      - zhipu_std 成功率: 0% (0/2) vs 基线 100% (2/2)
+      - 结论: zhipu引擎全面故障,系统通过baidu降级保证可用性
+
+================================================================================
+  END OF DEMO
+================================================================================

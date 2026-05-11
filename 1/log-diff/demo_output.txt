@@ -1,0 +1,329 @@
+================================================================================
+  RustSysAgent - log-diff skill 演示输出
+  命令: python scripts/python/run_log_diff.py ws-demo-20260509-001 --baseline logs/baseline/normal_trace.json
+  生成时间: 2026-05-11 14:30:00
+================================================================================
+
+>>> 正在搜索 UUID: ws-demo-20260509-001
+>>> 搜索范围: logs/api_log_20260509.jsonl (1380条), logs/tool_log_20260509.jsonl (540条)
+>>> 匹配到 12 条日志记录
+>>> 加载基线: logs/baseline/normal_trace.json
+>>> 正在构建执行链路...
+>>> 正在检测异常...
+>>> 正在与基线对比...
+
+================================================================================
+  分析报告
+================================================================================
+
+{
+  "success": true,
+  "uuid": "ws-demo-20260509-001",
+  "search_date": "2026-05-09",
+  "generated_at": "2026-05-11T14:30:00.123456",
+
+  "summary": {
+    "total_steps": 12,
+    "success_steps": 10,
+    "error_steps": 2,
+    "total_latency_ms": 28450.3,
+    "anomalies": [
+      "[步骤4] aggregate_search/api_response: 执行失败 - HTTPSConnectionPool(host='open.bigmodel.cn', port=443): Read timed out.",
+      "[步骤4] aggregate_search/api_response: 耗时 10279.5ms > 阈值 3000ms",
+      "[步骤8] aggregate_search/api_response: 执行失败 - Your account has insufficient balance",
+      "[步骤8] aggregate_search/api_response: 耗时 5134.2ms > 阈值 3000ms",
+      "[步骤11] weather-query/call_complete: 耗时 4158.9ms > 阈值 3000ms"
+    ]
+  },
+
+  "trace": [
+    {
+      "step": 1,
+      "ts": "2026-05-09T11:00:01.100",
+      "module": "gateway",
+      "function": "handle_socket",
+      "event": "ws_message_received",
+      "latency_ms": null,
+      "success": true,
+      "input_summary": {
+        "MessageType": "TaskAssignment",
+        "UserName": "cxl001",
+        "UserInputText": "我明天要从北京去上海，帮我查一下天气和高铁"
+      }
+    },
+    {
+      "step": 2,
+      "ts": "2026-05-09T11:00:01.350",
+      "module": "skill_selection",
+      "function": "select_skills",
+      "event": "selection_complete",
+      "latency_ms": 245.2,
+      "success": true,
+      "input_summary": {
+        "user_input": "我明天要从北京去上海，帮我查一下天气和高铁"
+      },
+      "output_summary": {
+        "selected_skills": ["weather-query", "train-ticket-search"],
+        "confidence": 0.95
+      }
+    },
+    {
+      "step": 3,
+      "ts": "2026-05-09T11:00:01.500",
+      "module": "train-ticket-search",
+      "function": "search_trains",
+      "event": "call_start",
+      "latency_ms": null,
+      "success": true,
+      "input_summary": {
+        "from": "北京",
+        "to": "上海",
+        "date": "2026-05-12",
+        "search_type": "高铁优先"
+      }
+    },
+    {
+      "step": 4,
+      "ts": "2026-05-09T11:00:01.520",
+      "module": "aggregate_search",
+      "function": "aggregate",
+      "event": "api_request",
+      "latency_ms": null,
+      "success": null,
+      "input_summary": {
+        "method": "FETCH",
+        "engine": "zhipu_std",
+        "query": "2026年5月12日 北京到上海 高铁 车次 时刻表",
+        "timeout_s": 10
+      }
+    },
+    {
+      "step": 5,
+      "ts": "2026-05-09T11:00:11.800",
+      "module": "aggregate_search",
+      "function": "aggregate",
+      "event": "api_response",
+      "latency_ms": 10279.5,
+      "success": false,
+      "error": "HTTPSConnectionPool(host='open.bigmodel.cn', port=443): Read timed out.",
+      "output_summary": {
+        "success": false,
+        "items": 0,
+        "engine": "zhipu_std"
+      }
+    },
+    {
+      "step": 6,
+      "ts": "2026-05-09T11:00:11.900",
+      "module": "aggregate_search",
+      "function": "aggregate",
+      "event": "api_request",
+      "latency_ms": null,
+      "success": null,
+      "input_summary": {
+        "method": "FETCH",
+        "engine": "baidu",
+        "query": "北京到上海 高铁 2026年5月12日",
+        "timeout_s": 5
+      }
+    },
+    {
+      "step": 7,
+      "ts": "2026-05-09T11:00:14.610",
+      "module": "aggregate_search",
+      "function": "aggregate",
+      "event": "api_response",
+      "latency_ms": 2706.6,
+      "success": true,
+      "output_summary": {
+        "success": true,
+        "items": 20,
+        "engine": "baidu"
+      }
+    },
+    {
+      "step": 8,
+      "ts": "2026-05-09T11:00:14.700",
+      "module": "weather-query",
+      "function": "query_weather",
+      "event": "call_start",
+      "latency_ms": null,
+      "success": true,
+      "input_summary": {
+        "city": "北京",
+        "date_range": "2026-05-12",
+        "query_type": "weather"
+      }
+    },
+    {
+      "step": 9,
+      "ts": "2026-05-09T11:00:14.720",
+      "module": "aggregate_search",
+      "function": "aggregate",
+      "event": "api_request",
+      "latency_ms": null,
+      "success": null,
+      "input_summary": {
+        "method": "FETCH",
+        "engine": "zhipu_std",
+        "query": "北京 2026-05-12 天气",
+        "timeout_s": 10
+      }
+    },
+    {
+      "step": 10,
+      "ts": "2026-05-09T11:00:19.860",
+      "module": "aggregate_search",
+      "function": "aggregate",
+      "event": "api_response",
+      "latency_ms": 5134.2,
+      "success": false,
+      "error": "Your account has insufficient balance",
+      "output_summary": {
+        "success": false,
+        "items": 0,
+        "engine": "zhipu_std"
+      }
+    },
+    {
+      "step": 11,
+      "ts": "2026-05-09T11:00:19.900",
+      "module": "aggregate_search",
+      "function": "aggregate",
+      "event": "api_request",
+      "latency_ms": null,
+      "success": null,
+      "input_summary": {
+        "method": "FETCH",
+        "engine": "baidu",
+        "query": "2026年5月12日 北京天气 气温",
+        "timeout_s": 5
+      }
+    },
+    {
+      "step": 12,
+      "ts": "2026-05-09T11:00:24.060",
+      "module": "aggregate_search",
+      "function": "aggregate",
+      "event": "api_response",
+      "latency_ms": 4158.9,
+      "success": true,
+      "output_summary": {
+        "success": true,
+        "items": 18,
+        "engine": "baidu"
+      }
+    }
+  ],
+
+  "comparison": {
+    "baseline": "logs/baseline/normal_trace.json",
+    "diff_items": [
+      "步骤数不一致: 当前 12 vs 基线 8",
+      "多了模块: aggregate_search (重试出现2次额外调用)",
+      "aggregate_search: 耗时增加 7480ms (基线平均 2800ms)",
+      "错误步骤增多: 当前 2 vs 基线 0"
+    ],
+    "diff_summary": "步骤数不一致: 当前 12 vs 基线 8; 多了模块: aggregate_search (重试出现2次额外调用); aggregate_search: 耗时增加 7480ms (基线平均 2800ms); 错误步骤增多: 当前 2 vs 基线 0"
+  }
+}
+
+================================================================================
+  人类可读摘要
+================================================================================
+
+┌─ 请求信息 ──────────────────────────────────────────────────────────────┐
+│ UUID      : ws-demo-20260509-001                                        │
+│ 用户      : cxl001                                                      │
+│ 输入      : 我明天要从北京去上海，帮我查一下天气和高铁                       │
+│ 日期      : 2026-05-09                                                   │
+│ 总步骤    : 12                                                           │
+│ 成功      : 10                                                           │
+│ 失败      : 2                                                            │
+│ 总耗时    : 28450.3ms (28.5秒)                                           │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌─ 执行链路 ──────────────────────────────────────────────────────────────┐
+│                                                                         │
+│  11:00:01.100  [gateway          ] ws_message_received       ✓          │
+│  11:00:01.350  [skill_selection  ] selection_complete        ✓  245ms   │
+│  11:00:01.500  [train-ticket     ] call_start                ✓          │
+│  11:00:01.520  [aggregate_search ] api_request (zhipu_std)   →          │
+│  11:00:11.800  [aggregate_search ] api_response              ✗ 10279ms  │
+│                 └─ ERROR: Read timed out (open.bigmodel.cn)             │
+│  11:00:11.900  [aggregate_search ] api_request (baidu重试)   →          │
+│  11:00:14.610  [aggregate_search ] api_response              ✓  2707ms  │
+│  11:00:14.700  [weather-query    ] call_start                ✓          │
+│  11:00:14.720  [aggregate_search ] api_request (zhipu_std)   →          │
+│  11:00:19.860  [aggregate_search ] api_response              ✗  5134ms  │
+│                 └─ ERROR: Your account has insufficient balance         │
+│  11:00:19.900  [aggregate_search ] api_request (baidu重试)   →          │
+│  11:00:24.060  [aggregate_search ] api_response              ✓  4159ms  │
+│                                                                         │
+│  ✓ 成功  ✗ 失败  → 进行中                                               │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌─ 异常明细 ──────────────────────────────────────────────────────────────┐
+│                                                                         │
+│  🔴 错误1: zhipu_std 搜索超时                                           │
+│     时间: 11:00:11.800                                                  │
+│     原因: HTTPSConnectionPool(host='open.bigmodel.cn', port=443):       │
+│           Read timed out                                                │
+│     耗时: 10279.5ms (阈值 3000ms)                                       │
+│     影响: train-ticket-search 高铁搜索的第一次尝试失败                     │
+│     恢复: 自动切换 baidu 引擎重试成功 (耗时 2707ms)                       │
+│                                                                         │
+│  🔴 错误2: zhipu_std 账户余额不足                                        │
+│     时间: 11:00:19.860                                                  │
+│     原因: Your account has insufficient balance                         │
+│     耗时: 5134.2ms (阈值 3000ms)                                        │
+│     影响: weather-query 天气查询的第一次尝试失败                           │
+│     恢复: 自动切换 baidu 引擎重试成功 (耗时 4159ms)                       │
+│                                                                         │
+│  🟡 告警: 步骤11 耗时偏高                                                │
+│     weather-query/baidu: 4158.9ms > 阈值 3000ms                         │
+│     注意: 虽然最后成功，但 baidu 引擎也接近超时                            │
+│                                                                         │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌─ 基线对比 ──────────────────────────────────────────────────────────────┐
+│                                                                         │
+│  基线文件: logs/baseline/normal_trace.json                               │
+│  基线时间: 2026-05-01 (正常运行时保存)                                    │
+│                                                                         │
+│  对比结果:                                                               │
+│  ┌──────────────────┬──────────┬──────────┬──────────┐                  │
+│  │ 指标             │ 本次     │ 基线     │ 差异     │                  │
+│  ├──────────────────┼──────────┼──────────┼──────────┤                  │
+│  │ 总步骤           │ 12       │ 8        │ +4       │                  │
+│  │ 错误步骤         │ 2        │ 0        │ +2  ⚠    │                  │
+│  │ 总耗时(ms)       │ 28450    │ 18500    │ +9950 ⚠  │                  │
+│  │ zhipu_std成功率  │ 0% (0/2) │ 100%(2/2)│ -100%⚠   │                  │
+│  │ baidu平均耗时    │ 3186ms   │ 2300ms   │ +886ms ⚠ │                  │
+│  └──────────────────┴──────────┴──────────┴──────────┘                  │
+│                                                                         │
+│  结论: zhipu_std 引擎全部失败（超时+余额不足），系统通过 baidu 降级        │
+│        保证最终结果可用，但整体耗时增加 54%。建议检查 zhipu 账户余额        │
+│        和 open.bigmodel.cn 网络连通性。                                   │
+│                                                                         │
+└──────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+  排查建议
+================================================================================
+
+1. [紧急] zhipu_std 账户余额不足，请立即充值或切换 API Key
+         → 影响范围: 2026-05-09 全天共 204 次调用返回 "insufficient balance"
+
+2. [高优] open.bigmodel.cn 网络超时
+         → 建议增加超时重试次数，或对该域名做健康检查探活
+
+3. [一般] baidu 引擎耗时较基线增长 38%
+         → 可能是 zhipu 故障后所有流量打到 baidu 导致排队，建议关注
+
+4. [建议] 将 zhipu_std 标记为降级状态
+         → 在 conf 中将 zhipu_std 权重暂时设为 0，全部流量走 baidu
+
+================================================================================
+  END OF REPORT
+================================================================================
