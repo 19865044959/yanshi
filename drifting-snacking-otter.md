@@ -270,57 +270,109 @@ UDS 上不传 infra、不传 api_key。Runtime 通过 `--agent-dir` 自己找到
 
 ## 6. 完整时序图
 
-以下示例：用户输入 "帮我搜机票和火车票" → entry_workflow（entry_node → 5 并行 skill_node → gather_node）
+### 6.1 启动 + 单 workflow 执行（entry → 5 并行 Node → gather）
 
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant AS as agent_service
+    participant B as Base (libagentflow.so)
+    participant R as Runtime (子进程)
+    participant L as LLM (外部)
+
+    U->>AS: "帮我搜机票和火车票"
+
+    Note over AS: 读 agent.json → language = "cpp"
+
+    AS->>R: fork+exec cpp_runtime --agent-dir=/path/to/agent
+    Note over R: 读 infra.json → 解析 ${ENV_VAR} → 缓存
+    Note over R: socket → bind → listen → accept (阻塞)
+
+    AS->>B: dlopen(libagentflow.so)
+    B->>R: connect(/tmp/agentflow_cpp.sock)
+
+    Note over B: 解析 workflow.json → DAG<br/>拓扑排序 → entry_node 入度=0
+
+    B->>R: execute_node(entry, inputs)
+    Note over R: dlopen → dlsym → call
+    R->>L: sdk.call_llm() → HTTP
+    L-->>R: LLM 响应
+    Note over R: dlclose
+    R-->>B: output {user_input, next_skills}
+
+    Note over B: edge 映射: 5 个后继节点<br/>入度均满足 → 并行 fan-out
+
+    par 并行执行 5 个 Node
+        B->>R: execute_node(search, inputs)
+        Note over R: dlopen → dlsym → call
+        R->>L: sdk.call_llm() / sdk.exec_tool()
+        L-->>R: 响应
+        Note over R: dlclose
+        R-->>B: output_a
+
+    and
+        B->>R: execute_node(train, inputs)
+        Note over R: dlopen → call → dlclose
+        R-->>B: output_b
+
+    and
+        B->>R: execute_node(flight, inputs)
+        Note over R: dlopen → call → dlclose
+        R-->>B: output_c
+
+    and
+        B->>R: execute_node(surround, inputs)
+        Note over R: dlopen → call → dlclose
+        R-->>B: output_d
+
+    and
+        B->>R: execute_node(weather, inputs)
+        Note over R: dlopen → call → dlclose
+        R-->>B: output_e
+    end
+
+    Note over B: 5 个全完成<br/>edge 映射 → 组装 gather inputs
+
+    B->>R: execute_node(gather, inputs)
+    Note over R: dlopen → call → dlclose
+    R-->>B: output {talk_result}
+
+    Note over B: workflow 结束 → 返回结果
+    B-->>AS: talk_result
+    AS-->>U: "为您找到以下信息..."
 ```
-User          agent_service          Base (编排)           Runtime (.so 管理)     DataBus
- │                 │                     │                      │                   │
- │─"搜机票"────────→│                     │                      │                   │
- │                 │                     │                      │                   │
- │             ┌───┴── agent.json→"cpp"  │                      │                   │
- │             │   fork+exec cpp_runtime │                      │                   │
- │             │   --agent-dir=xxx ──────────────────────────→  │                   │
- │             │                     │   读 infra.json ←───    │                   │
- │             │                     │   bind+listen           │                   │
- │             │   dlopen(libagentflow.so)                    │                   │
- │             │                     │──connect(sock)─────────→│                   │
- │             │                     │                      │                   │
- │             │                     │                     │                   │
- │             │              ┌──────┴─ 解析 workflow.json    │                   │
- │             │              │ 拓扑排序 → entry 入度=0       │                   │
- │             │              └──────┬─                      │                   │
- │             │                     │                      │                   │
- │             │                     │─ execute_node ───────→│                   │
- │             │                     │                      │ dlopen→dlsym→call │
- │             │                     │                      │  └─ sdk.call_llm()│
- │             │                     │←─── output ──────────│ dlclose()         │
- │             │                     │                      │                   │
- │             │              ┌──────┴─ edge映射→组装inputs   │                   │
- │             │              │ 5节点并行 fan-out            │                   │
- │             │              └──────┬─                      │                   │
- │             │                     │                      │                   │
- │             │   ╔══════ 并行 UDS ═══════╗                │                   │
- │             │   ║── execute_node(search)──→│ dlopen→call │                   │
- │             │   ║── execute_node(train) ──→│ dlopen→call │                   │
- │             │   ║── execute_node(flight)──→│ dlopen→call │                   │
- │             │   ║── ...                    │              │                   │
- │             │   ║←── outputs ─────────────│              │                   │
- │             │   ╚═════════════════════════╝              │                   │
- │             │                     │                      │                   │
- │             │              ┌──────┴─ 5个全完成            │                   │
- │             │              │ edge映射→ gather的inputs     │                   │
- │             │              └──────┬─                      │                   │
- │             │                     │─ execute_node ───────→│ dlopen→call→dlclose│
- │             │                     │←─── output ──────────│                   │
- │             │                     │                      │                   │
- │             │              workflow结束 → 返回结果          │                   │
- │←"为您找到..."──│                     │                      │                   │
+
+### 6.2 跨对话轮次（DataBus 使用的唯一场景）
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant AS as agent_service
+    participant B as Base
+    participant DB as DataBus
+
+    U->>AS: 第1轮: "帮我搜机票"
+    AS->>B: dispatch
+    Note over B: 解析 workflow → 执行 search_node → output:
+    Note over B: { flights: [{CA1234,1280},{MU5678,960},{CZ9012,2100}] }
+    B->>DB: put("/sess-001/search_result", flights)
+    B-->>AS: "搜到3个航班: CA1234 1280元..."
+    AS-->>U: 第1轮响应
+
+    U->>AS: 第2轮: "挑最便宜的"
+    AS->>B: dispatch (同一个 session)
+    B->>DB: get("/sess-001/search_result")
+    DB-->>B: { flights: [...] }
+    Note over B: 组装 inputs: { user_input + context(来自DataBus) }
+    Note over B: 解析 workflow → 执行 analysis_node
+    B-->>AS: "最便宜的是 MU5678，960元"
+    AS-->>U: 第2轮响应
 ```
 
 **要点**：
 - Runtime 每次做的事完全一样：收到请求 → `dlopen` → `dlsym` → `call` → `dlclose` → 返回
 - 同 workflow 内数据 100% 通过栈变量 + edge 映射流转，**不经过 DataBus**
-- DataBus 只在需要跨对话轮次持久化时才使用（下一节说明）
+- DataBus 只在第 2 轮需要读第 1 轮的搜索结果时才使用
 
 ---
 
