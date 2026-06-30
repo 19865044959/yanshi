@@ -1,0 +1,338 @@
+[2026-06-30 12:22:00.132] [INFO] [siteclaw_gateway::router::router] [log] [Router] Starting message loop...
+[2026-06-30 12:22:00.132] [INFO] [timed_task.recovery.done] [log] event=timed_task.recovery.done cleaned_stale_states=0 compensated_missed_tasks=0
+[2026-06-30 12:22:00.132] [INFO] [siteclaw_channel::http] [log] [HTTP:http_api] listening on 127.0.0.1:8080 (agent HTTP API)
+[2026-06-30 12:22:00.132] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:22:00.133] [INFO] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] Feedback listener started
+[2026-06-30 12:22:05.134] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:22:10.135] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:22:15.137] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:22:15.823] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:22:15.823] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:22:15.823] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:22:15.823] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:15.824] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:20.138] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:22:21.702] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=370c8039-a8a5-4f92-9db3-ed2ea53f3f27, channel_id=http_api, src=user:http_api, dst=main): 你好
+[2026-06-30 12:22:21.702] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:22:21.702] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:22:21.702] [INFO] [siteclaw_gateway::router::handlers::chat_handler] [log] [ChatHandler] Agent instance main not found, creating new
+[2026-06-30 12:22:21.702] [INFO] [siteclaw_gateway::router::handlers::chat_handler] [log] [ChatHandler] ensure_agent_registered: agent_id=main, config_template_id=main, actors_config.workspace=Some("workspace")
+[2026-06-30 12:22:21.702] [INFO] [siteclaw_gateway::router::handlers::chat_handler] [log] [ChatHandler] Registering agent main with model=qwen-plus, max_iterations=10, workspace=Some("workspace")
+[2026-06-30 12:22:21.703] [INFO] [siteclaw_tool::user_tool::loader] [log] [UserToolLoader] 开始加载工具包: /data/siteclaw/workspace/config/./config_ha_control.json
+[2026-06-30 12:22:21.703] [DEBUG] [siteclaw_tool::user_tool::library] [log] [DynamicLibraryLoader] 加载库: /data/siteclaw/workspace/config/libha_control.so
+[2026-06-30 12:22:21.704] [DEBUG] [siteclaw_tool::user_tool::library] [log] [DynamicLibraryLoader] 查找符号: execute
+[2026-06-30 12:22:21.704] [DEBUG] [siteclaw_tool::user_tool::library] [log] [DynamicLibraryLoader] 查找符号: free_result
+[2026-06-30 12:22:21.704] [INFO] [siteclaw_tool::user_tool::loader] [log] [UserToolLoader] 注册工具: ha_query, siteclaw_ctx: ["session_id", "agent_id"]
+[2026-06-30 12:22:21.704] [INFO] [siteclaw_tool::user_tool::loader] [log] [UserToolLoader] 注册工具: ha_control, siteclaw_ctx: ["session_id", "agent_id"]
+[2026-06-30 12:22:21.705] [INFO] [siteclaw_tool::user_tool::loader] [log] [UserToolLoader] 工具包加载成功: ha_control, 工具数: 2
+[2026-06-30 12:22:21.705] [DEBUG] [siteclaw_runtime::agent::registry] [log] [AgentRegistry] Created agent instance main
+[2026-06-30 12:22:21.705] [INFO] [siteclaw_gateway::router::handlers::chat_handler] [log] [ChatHandler] session_id=sess.0.6131, is_ephemeral=false, return_policy=result_only, reply_chat_member=
+[2026-06-30 12:22:21.706] [WARN] [siteclaw_runtime::actor::memory::memory_act::ops] [log] session_start clear failed: session_id='sess.0.6131'
+[2026-06-30 12:22:21.706] [DEBUG] [siteclaw_runtime::actor::tool::tool_act] [log] [ToolActor] 生命周期 session_start 无触发配置，跳过
+[2026-06-30 12:22:21.707] [DEBUG] [siteclaw_runtime::actor::tool::tool_act] [log] [ToolActor] 生命周期 dialogue_start 无触发配置，跳过
+[2026-06-30 12:22:21.707] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] response_session_id=sess.0.6131, is_delegated=false, return_policy=result_only
+[2026-06-30 12:22:21.707] [INFO] [siteclaw_runtime::runner::reactor] [log] [reactor:think_streaming_first] session_id=sess.0.6131, iteration=0, registered_actors=["soul", "skill", "memory", "timed_task", "tool"]
+[2026-06-30 12:22:21.712] [WARN] [siteclaw_runtime::runner::reactor] [log] [reactor:think_streaming] session_id=sess.0.6131, generate_skill tool NOT registered. available tools: ["timed_task_create", "timed_task_update", "timed_task_remove", "timed_task_list", "ha_query", "ha_control"]
+[2026-06-30 12:22:21.716] [DEBUG] [reqwest::connect] [log] starting new connection: https://dashscope.aliyuncs.com/
+[2026-06-30 12:22:22.254] [DEBUG] [hyper_util::client::legacy::connect::http] [log] connecting to 8.140.217.18:443
+[2026-06-30 12:22:22.457] [DEBUG] [hyper_util::client::legacy::connect::http] [log] connected to 8.140.217.18:443
+[2026-06-30 12:22:24.589] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:24.589] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:24.590] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=你好
+[2026-06-30 12:22:24.591] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:24.591] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:24.591] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=<
+[2026-06-30 12:22:24.592] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:24.592] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:24.592] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=rc
+[2026-06-30 12:22:24.593] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:24.594] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:24.594] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=>
+[2026-06-30 12:22:24.608] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:24.608] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:24.609] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=0</rc>
+[2026-06-30 12:22:24.611] [DEBUG] [hyper_util::client::legacy::pool] [log] pooling idle connection for ("https", dashscope.aliyuncs.com)
+[2026-06-30 12:22:24.613] [DEBUG] [siteclaw_runtime::runner::stagnation] [log] [stagnation] update_streak: session_id=sess.0.6131, calls_len=0, fp=None, last_fp=None, streak=0, threshold=5
+[2026-06-30 12:22:24.613] [DEBUG] [siteclaw_runtime::runner::stagnation] [log] [stagnation] no fingerprint (no tool calls), reset streak to 0
+[2026-06-30 12:22:24.634] [DEBUG] [siteclaw_runtime::actor::tool::tool_act] [log] [ToolActor] 生命周期 dialogue_end 无触发配置，跳过
+[2026-06-30 12:22:24.634] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:24.634] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:24.634] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=true, content_preview=
+[2026-06-30 12:22:24.635] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] Stream finished for session sess.0.6131, accumulated_chars=0
+[2026-06-30 12:22:25.139] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:22:28.878] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=be27c6d9-2a08-47d8-8df8-67171ef8ee80, channel_id=http_api, src=user:http_api, dst=main): 查询设备
+[2026-06-30 12:22:28.878] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["op", "request_id"]
+[2026-06-30 12:22:28.878] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:22:28.878] [INFO] [siteclaw_gateway::router::handlers::chat_handler] [log] [ChatHandler] Reusing existing agent instance: main
+[2026-06-30 12:22:28.878] [INFO] [siteclaw_gateway::router::handlers::chat_handler] [log] [ChatHandler] session_id=sess.1.5343, is_ephemeral=false, return_policy=result_only, reply_chat_member=
+[2026-06-30 12:22:28.879] [WARN] [siteclaw_runtime::actor::memory::memory_act::ops] [log] session_start clear failed: session_id='sess.1.5343'
+[2026-06-30 12:22:28.879] [DEBUG] [siteclaw_runtime::actor::tool::tool_act] [log] [ToolActor] 生命周期 session_start 无触发配置，跳过
+[2026-06-30 12:22:28.880] [DEBUG] [siteclaw_runtime::actor::tool::tool_act] [log] [ToolActor] 生命周期 dialogue_start 无触发配置，跳过
+[2026-06-30 12:22:28.880] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] response_session_id=sess.1.5343, is_delegated=false, return_policy=result_only
+[2026-06-30 12:22:28.880] [INFO] [siteclaw_runtime::runner::reactor] [log] [reactor:think_streaming_first] session_id=sess.1.5343, iteration=0, registered_actors=["soul", "skill", "memory", "timed_task", "tool"]
+[2026-06-30 12:22:28.887] [WARN] [siteclaw_runtime::runner::reactor] [log] [reactor:think_streaming] session_id=sess.1.5343, generate_skill tool NOT registered. available tools: ["timed_task_create", "timed_task_update", "timed_task_remove", "timed_task_list", "ha_query", "ha_control"]
+[2026-06-30 12:22:28.893] [DEBUG] [hyper_util::client::legacy::pool] [log] reuse idle connection for ("https", dashscope.aliyuncs.com)
+[2026-06-30 12:22:30.141] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:22:30.667] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:30.670] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:30.671] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=__
+[2026-06-30 12:22:30.672] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:30.673] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:30.673] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=SYS_DEVICE
+[2026-06-30 12:22:30.674] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:30.674] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:30.675] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=_LIST__
+[2026-06-30 12:22:30.752] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:30.752] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:30.753] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=<rc
+[2026-06-30 12:22:30.753] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:30.753] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:30.754] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=>0</rc
+[2026-06-30 12:22:30.852] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:30.852] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:30.852] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=>
+[2026-06-30 12:22:30.855] [DEBUG] [siteclaw_runtime::runner::stagnation] [log] [stagnation] update_streak: session_id=sess.1.5343, calls_len=0, fp=None, last_fp=None, streak=0, threshold=5
+[2026-06-30 12:22:30.856] [DEBUG] [siteclaw_runtime::runner::stagnation] [log] [stagnation] no fingerprint (no tool calls), reset streak to 0
+[2026-06-30 12:22:30.876] [DEBUG] [siteclaw_runtime::actor::tool::tool_act] [log] [ToolActor] 生命周期 dialogue_end 无触发配置，跳过
+[2026-06-30 12:22:30.877] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:30.877] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:30.877] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=true, content_preview=
+[2026-06-30 12:22:30.877] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] Stream finished for session sess.1.5343, accumulated_chars=0
+[2026-06-30 12:22:30.877] [DEBUG] [hyper_util::client::legacy::pool] [log] pooling idle connection for ("https", dashscope.aliyuncs.com)
+[2026-06-30 12:22:35.142] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:22:40.143] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:22:42.994] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=f810be3a-bb63-41b3-ac0b-31fb08539a2d, channel_id=http_api, src=user:http_api, dst=main): 关闭加湿器
+[2026-06-30 12:22:42.994] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["op", "request_id"]
+[2026-06-30 12:22:42.994] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:22:42.994] [INFO] [siteclaw_gateway::router::handlers::chat_handler] [log] [ChatHandler] Reusing existing agent instance: main
+[2026-06-30 12:22:42.994] [INFO] [siteclaw_gateway::router::handlers::chat_handler] [log] [ChatHandler] session_id=sess.2.2516, is_ephemeral=false, return_policy=result_only, reply_chat_member=
+[2026-06-30 12:22:42.996] [WARN] [siteclaw_runtime::actor::memory::memory_act::ops] [log] session_start clear failed: session_id='sess.2.2516'
+[2026-06-30 12:22:42.996] [DEBUG] [siteclaw_runtime::actor::tool::tool_act] [log] [ToolActor] 生命周期 session_start 无触发配置，跳过
+[2026-06-30 12:22:42.997] [DEBUG] [siteclaw_runtime::actor::tool::tool_act] [log] [ToolActor] 生命周期 dialogue_start 无触发配置，跳过
+[2026-06-30 12:22:42.997] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] response_session_id=sess.2.2516, is_delegated=false, return_policy=result_only
+[2026-06-30 12:22:42.997] [INFO] [siteclaw_runtime::runner::reactor] [log] [reactor:think_streaming_first] session_id=sess.2.2516, iteration=0, registered_actors=["soul", "skill", "memory", "timed_task", "tool"]
+[2026-06-30 12:22:43.003] [WARN] [siteclaw_runtime::runner::reactor] [log] [reactor:think_streaming] session_id=sess.2.2516, generate_skill tool NOT registered. available tools: ["timed_task_create", "timed_task_update", "timed_task_remove", "timed_task_list", "ha_query", "ha_control"]
+[2026-06-30 12:22:43.009] [DEBUG] [hyper_util::client::legacy::pool] [log] reuse idle connection for ("https", dashscope.aliyuncs.com)
+[2026-06-30 12:22:44.475] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:44.475] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:44.475] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=正在
+[2026-06-30 12:22:44.476] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:44.476] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:44.476] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=关闭
+[2026-06-30 12:22:44.591] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:44.591] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:44.592] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=加湿器
+[2026-06-30 12:22:44.592] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:44.593] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:44.593] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=……
+[2026-06-30 12:22:44.678] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:44.678] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:44.678] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=  
+<rc>
+[2026-06-30 12:22:44.777] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:44.778] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:44.778] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=false, content_preview=0</rc>
+[2026-06-30 12:22:44.779] [DEBUG] [hyper_util::client::legacy::pool] [log] pooling idle connection for ("https", dashscope.aliyuncs.com)
+[2026-06-30 12:22:44.782] [DEBUG] [siteclaw_runtime::runner::stagnation] [log] [stagnation] update_streak: session_id=sess.2.2516, calls_len=0, fp=None, last_fp=None, streak=0, threshold=5
+[2026-06-30 12:22:44.783] [DEBUG] [siteclaw_runtime::runner::stagnation] [log] [stagnation] no fingerprint (no tool calls), reset streak to 0
+[2026-06-30 12:22:44.800] [DEBUG] [siteclaw_runtime::actor::tool::tool_act] [log] [ToolActor] 生命周期 dialogue_end 无触发配置，跳过
+[2026-06-30 12:22:44.801] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:44.801] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:44.801] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] dispatched msg, is_final=true, content_preview=
+[2026-06-30 12:22:44.802] [INFO] [siteclaw_gateway::router::streaming] [log] [Router:process_streaming] Stream finished for session sess.2.2516, accumulated_chars=0
+[2026-06-30 12:22:45.146] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:22:45.819] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:22:45.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["op", "request_id"]
+[2026-06-30 12:22:45.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:22:45.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:22:45.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:22:50.147] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:22:55.150] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:00.153] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:05.156] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:10.157] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:15.158] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:15.821] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:23:15.821] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["op", "request_id"]
+[2026-06-30 12:23:15.821] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:23:15.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:23:15.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:23:20.160] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:25.162] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:30.165] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:35.166] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:40.169] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:45.170] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:45.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:23:45.821] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:23:45.821] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:23:45.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:23:45.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:23:50.171] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:23:55.173] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:00.179] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:05.181] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:10.182] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:15.183] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:15.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:24:15.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:24:15.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:24:15.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:24:15.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:24:20.186] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:25.187] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:30.188] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:35.190] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:40.192] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:45.193] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:45.828] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:24:45.829] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["op", "request_id"]
+[2026-06-30 12:24:45.829] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:24:45.830] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:24:45.830] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:24:50.195] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:24:55.198] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:00.199] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:05.201] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:10.202] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:15.205] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:15.819] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:25:15.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:25:15.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:25:15.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:25:15.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:25:20.206] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:25.209] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:30.210] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:35.212] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:40.215] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:45.218] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:45.824] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:25:45.824] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:25:45.825] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:25:45.826] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:25:45.826] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:25:50.220] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:25:55.221] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:00.223] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:05.225] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:10.228] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:15.231] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:15.842] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:26:15.842] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:26:15.842] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:26:15.843] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:26:15.843] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:26:20.233] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:25.236] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:30.238] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:35.241] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:40.242] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:45.244] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:45.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:26:45.821] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:26:45.821] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:26:45.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:26:45.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:26:50.245] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:26:55.247] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:00.248] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:05.251] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:10.252] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:15.256] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:15.824] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:27:15.824] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:27:15.824] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:27:15.824] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:27:15.824] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:27:20.257] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:25.258] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:30.260] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:35.262] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:40.265] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:45.266] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:45.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:27:45.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:27:45.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:27:45.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:27:45.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:27:50.267] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:27:55.269] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:00.271] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:05.272] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:10.275] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:15.278] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:15.819] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:28:15.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["op", "request_id"]
+[2026-06-30 12:28:15.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:28:15.822] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:28:15.824] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:28:20.281] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:25.284] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:30.285] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:35.287] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:40.289] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:45.292] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:45.819] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:28:45.819] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["op", "request_id"]
+[2026-06-30 12:28:45.819] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:28:45.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:28:45.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:28:50.294] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:28:55.295] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:00.296] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:05.298] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:10.300] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:15.301] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:15.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:29:15.821] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["op", "request_id"]
+[2026-06-30 12:29:15.821] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:29:15.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:29:15.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:29:20.303] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:25.306] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:30.307] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:35.310] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:40.311] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:45.312] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:45.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:29:45.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:29:45.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:29:45.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:29:45.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:29:50.313] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:29:55.314] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:00.316] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:05.318] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:10.320] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:15.323] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:15.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:30:15.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["op", "request_id"]
+[2026-06-30 12:30:15.821] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:30:15.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:30:15.821] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:30:20.324] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:25.327] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:30.329] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:35.331] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:40.334] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:45.336] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:45.819] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:30:45.819] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["request_id", "op"]
+[2026-06-30 12:30:45.820] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:30:45.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:30:45.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:30:50.337] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:30:55.339] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:31:00.345] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:31:05.347] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:31:10.350] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:31:15.351] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:31:15.819] [INFO] [siteclaw_gateway::router::router] [log] [Router] Received message (chat_id=gateway-http, channel_id=http_api, src=user:http_api, dst=service:gateway): {"enabled_only":false,"page":1,"page_size":20}
+[2026-06-30 12:31:15.819] [INFO] [siteclaw_gateway::router::router] [log] [Router] message metadata keys: ["op", "request_id"]
+[2026-06-30 12:31:15.819] [INFO] [siteclaw_gateway::router::router] [log] [Router] Learned route: user:http_api -> http_api
+[2026-06-30 12:31:15.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: dst=user:http_api, msg_type=, available_routes=["user:cli", "service:http_webhook", "service:gateway", "agent:new", "user:http_api", "main"]
+[2026-06-30 12:31:15.820] [INFO] [siteclaw_gateway::router::streaming] [log] [Router] dispatch_response: found route user:http_api -> http_api, sending msg_type=
+[2026-06-30 12:31:20.353] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:31:25.356] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
+[2026-06-30 12:31:30.358] [DEBUG] [siteclaw_timed_task::runtime] [log] [TimedTaskRuntime] tick iteration: processed 0 tasks
