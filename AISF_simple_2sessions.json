@@ -1,0 +1,144 @@
+{
+  "TC001": {
+    "session_name": "多意图并行发起 + 多轮条件叠加过滤 + 跨工具信息联动修改测试",
+    "total_turns": 4,
+    "rounds": [
+      {
+        "user_input": "我下周五要去杭州出差，帮我查一下下周五杭州的天气，查一下本周四晚广州到杭州的高铁票，再推荐一下杭州西湖景区附近的商务酒店，另外查一下西湖景区近期的商务会展活动",
+        "expected_output_reference": "提供下周五杭州天气预报、本周四晚广州至杭州高铁票信息、西湖景区周边商务酒店推荐、西湖景区近期商务会展活动基础信息",
+        "num_turns": 1
+      },
+      {
+        "user_input": "酒店要四星级及以上，价格不超过 400 元 / 晚，含双早，高铁票改成周五早上 7-10 点出发的二等座，会展活动要线下可参与的行业类活动",
+        "expected_output_reference": "筛选符合四星及以上、400 元 / 晚内、含双早的西湖周边酒店；更新为周五 7-10 点广州至杭州高铁二等座信息；筛选西湖线下可参与的行业类会展活动",
+        "num_turns": 2
+      },
+      {
+        "user_input": "酒店有没有免费接送站服务？那个会展活动的具体举办地点和报名方式是什么？",
+        "expected_output_reference": "明确推荐酒店是否提供免费接送站服务；补充对应会展活动的具体举办地点与官方报名方式",
+        "num_turns": 3
+      },
+      {
+        "user_input": "我不要高铁票了，改成下周日杭州回广州的早班机票，天气再补查一下周日杭州的，把这些调整后的所有信息按行程节点汇总好",
+        "expected_output_reference": "补查下周日杭州天气预报；提供下周日杭州回广州的早班机票信息；按行程节点汇总所有调整后的完整信息",
+        "num_turns": 4
+      }
+    ]
+  },
+  "TC003": {
+    "session_name": "超过20轮的多轮对话，上下文和长期记忆关联",
+    "total_turns": 22,
+    "rounds": [
+      {
+        "user_input": "你好，我不吃辣，所有饮食相关的推荐都不能有辣的菜品",
+        "expected_output_reference": "礼貌回应用户，确认已记录用户不吃辣的饮食禁忌，后续饮食推荐会严格规避辣的菜品",
+        "num_turns": 1
+      },
+      {
+        "user_input": "推荐一下广州的特色美食",
+        "expected_output_reference": "提供广州不辣的特色美食列表，包含美食名称、口味特点、推荐店铺",
+        "num_turns": 2
+      },
+      {
+        "user_input": "广州今天的天气怎么样？",
+        "expected_output_reference": "提供广州当日的天气预报，包含温度、降水、风力等核心信息",
+        "num_turns": 3
+      },
+      {
+        "user_input": "广州有什么适合周末去玩的公园？",
+        "expected_output_reference": "提供广州适合周末游玩的公园列表，包含公园名称、地址、核心亮点、配套设施",
+        "num_turns": 4
+      },
+      {
+        "user_input": "这些公园里，哪个有免费的儿童游乐设施？",
+        "expected_output_reference": "正确指代上一轮的公园列表，筛选出带有免费儿童游乐设施的公园，说明设施情况",
+        "num_turns": 5
+      },
+      {
+        "user_input": "查一下广州塔的门票价格",
+        "expected_output_reference": "提供广州塔最新的门票价格、开放时间、各项目收费标准、优惠政策",
+        "num_turns": 6
+      },
+      {
+        "user_input": "帮我写一段去广州塔游玩的朋友圈文案",
+        "expected_output_reference": "撰写贴合广州塔游玩场景的朋友圈文案，风格自然生动",
+        "num_turns": 7
+      },
+      {
+        "user_input": "查一下广州到深圳的高铁票，明天的，二等座",
+        "expected_output_reference": "提供广州次日到深圳的高铁二等座车次列表，包含车次号、发车 / 到达时间、票价、余票情况",
+        "num_turns": 8
+      },
+      {
+        "user_input": "这些车次里，哪个发车时间最早？",
+        "expected_output_reference": "正确指代上一轮的车次列表，筛选出发车时间最早的车次，说明发车 / 到达时间、票价",
+        "num_turns": 9
+      },
+      {
+        "user_input": "深圳明天的天气怎么样？",
+        "expected_output_reference": "提供深圳次日的天气预报，包含温度、降水、风力等核心信息",
+        "num_turns": 10
+      },
+      {
+        "user_input": "深圳有什么适合亲子游玩的景点？",
+        "expected_output_reference": "提供深圳适合亲子游玩的景点列表，包含景点名称、地址、门票信息、亲子亮点",
+        "num_turns": 11
+      },
+      {
+        "user_input": "这些景点里，哪个是室内的？",
+        "expected_output_reference": "正确指代上一轮的景点列表，筛选出室内的亲子景点，说明景点特色、开放时间",
+        "num_turns": 12
+      },
+      {
+        "user_input": "查一下深圳的特色美食",
+        "expected_output_reference": "提供深圳不辣的特色美食列表，包含美食名称、口味特点、推荐店铺",
+        "num_turns": 13
+      },
+      {
+        "user_input": "这些美食里，哪个是甜口的？",
+        "expected_output_reference": "正确指代上一轮的深圳美食列表，筛选出甜口的特色美食，说明口味特点、推荐店铺",
+        "num_turns": 14
+      },
+      {
+        "user_input": "查一下深圳到广州的机票，周末的，经济舱",
+        "expected_output_reference": "提供深圳周末飞广州的经济舱航班列表，包含航班号、起降时间、航司、票价",
+        "num_turns": 15
+      },
+      {
+        "user_input": "这些航班里，哪个的准点率最高？",
+        "expected_output_reference": "正确指代上一轮的航班列表，筛选出准点率最高的航班，说明准点率数据、航司信息",
+        "num_turns": 16
+      },
+      {
+        "user_input": "广州最近有什么新开的商场吗？",
+        "expected_output_reference": "提供广州近期新开的商场列表，包含商场名称、地址、开业时间、核心亮点",
+        "num_turns": 17
+      },
+      {
+        "user_input": "这些商场里，哪个有适合家庭聚餐的餐厅？",
+        "expected_output_reference": "正确指代上一轮的商场列表，筛选出带有适合家庭聚餐餐厅的商场，说明餐厅的菜系、特色",
+        "num_turns": 18
+      },
+      {
+        "user_input": "查一下广州今天的实时气温",
+        "expected_output_reference": "提供广州当前的实时气温、体感温度、风力湿度等气象数据",
+        "num_turns": 19
+      },
+      {
+        "user_input": "广州有什么好喝的奶茶品牌推荐？",
+        "expected_output_reference": "提供广州口碑好的奶茶品牌列表，包含品牌名称、招牌产品、口味特点",
+        "num_turns": 20
+      },
+      {
+        "user_input": "这些奶茶里，哪个是辣的？",
+        "expected_output_reference": "明确告知用户常规奶茶均无辣口产品，同时结合用户不吃辣的禁忌，推荐不辣的经典奶茶产品，规避任何辣口相关的内容",
+        "num_turns": 21
+      },
+      {
+        "user_input": "推荐一家成都的正宗川菜馆，要口碑好的",
+        "expected_output_reference": "正确回忆第一轮用户提到的不吃辣的饮食禁忌，礼貌告知用户川菜多为辣口，不符合其饮食禁忌，同时推荐成都当地不辣的特色菜系餐厅，而非推荐川菜馆",
+        "num_turns": 22
+      }
+    ]
+  }
+}
