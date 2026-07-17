@@ -1,0 +1,178 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "dimensions": [
+      {
+        "id": "auto_extraction",
+        "weight": 0.4
+      },
+      {
+        "id": "semantic_recall",
+        "weight": 0.35
+      },
+      {
+        "id": "keyword_limitation",
+        "weight": 0.25
+      }
+    ]
+  },
+  "test_cases": [
+    {
+      "id": "TC-MEM-001",
+      "name": "T恤购物：隐晦偏好萃取 + 语义召回",
+      "session_1": {
+        "name": "闲聊透露偏好",
+        "user_input": "闲聊一下不用操作——我昨天逛淘宝买T恤，纯棉基础款，M码穿着刚好合身。颜色的话白色和藏青的最百搭，卡其色试了下不太衬我肤色。牌子的话优衣库穿最多，MUJI的摸起来更厚实但要149感觉略贵。你说像我这种只买纯色基础款的人，是不是太无趣了？",
+        "expected_extraction": [
+          {
+            "key": "服装尺码",
+            "value": "M"
+          },
+          {
+            "key": "服装面料偏好",
+            "value": "纯棉"
+          },
+          {
+            "key": "服装风格",
+            "value": "纯色基础款"
+          },
+          {
+            "key": "颜色偏好",
+            "value": "白色、藏青色"
+          },
+          {
+            "key": "偏爱品牌",
+            "value": "优衣库"
+          }
+        ],
+        "min_extracted_facts": 3,
+        "scenarios": {
+          "before_extraction": {
+            "branch": "before_meomry_improve",
+            "test": "extraction",
+            "expected": "fail",
+            "result": {
+              "passed": true,
+              "score": 0.0
+            }
+          },
+          "after_extraction": {
+            "branch": "origin/main",
+            "test": "extraction",
+            "expected": "pass",
+            "result": {
+              "passed": true,
+              "score": 1.0,
+              "scenario_name": "隐晦用户画像自动萃取",
+              "details": {
+                "mode": "offline_pre_seed",
+                "facts_written": 5,
+                "facts_expected": 5,
+                "auto_update_returned": 5
+              }
+            }
+          }
+        }
+      },
+      "session_2": {
+        "name": "淘宝买T恤",
+        "user_input": "帮我上淘宝搜一下T恤，夏天想再囤几件，帮我找找合适的",
+        "expected_keywords": [
+          "M",
+          "纯棉",
+          "白色",
+          "藏青",
+          "优衣库",
+          "基础款"
+        ],
+        "min_matched_keywords": 2,
+        "keyword_fail_reason": "T恤/短袖/上衣等词在关键词同义词表(SYNONYMS)中无映射到服装偏好相关词",
+        "scenarios": {
+          "before_recall": {
+            "branch": "before_meomry_improve",
+            "test": "recall",
+            "expected": "fail",
+            "result": {
+              "passed": true,
+              "score": 0.0
+            }
+          },
+          "after_recall_keyword": {
+            "branch": "origin/main",
+            "test": "recall_keyword",
+            "expected": "fail",
+            "result": {
+              "passed": true,
+              "score": 0.0,
+              "scenario_name": "关键词召回（预期失败：T恤无同义词映射）",
+              "details": {
+                "mode": "keyword_fallback",
+                "query": "帮我上淘宝搜一下T恤，夏天想再囤几件，帮我找找合适的",
+                "result": "(空)",
+                "facts_recalled": 0
+              }
+            }
+          },
+          "after_recall_embedding": {
+            "branch": "origin/main",
+            "test": "recall_embedding",
+            "expected": "pass",
+            "result": {
+              "passed": true,
+              "score": 1.0,
+              "scenario_name": "Embedding语义召回（预期成功）",
+              "details": {
+                "mode": "embedding_semantic",
+                "query": "帮我上淘宝搜一下T恤，夏天想再囤几件，帮我找找合适的",
+                "result": "[Auto Retrieved Memory]\n- [User Profile] 偏爱品牌: 优衣库\n- [User Profile] 服装面料偏好: 纯棉\n- [User Profile] 颜色偏好: 白色、藏青色\n- [User Profile] 服装风格: 纯色基础款\n- [User Profile] 服装尺码: M",
+                "facts_recalled": 6,
+                "min_required": 2,
+                "matched_keywords_in_result": [
+                  "M",
+                  "纯棉",
+                  "白色",
+                  "藏青",
+                  "优衣库",
+                  "基础款"
+                ],
+                "embedding_scores": [
+                  {
+                    "key": "偏爱品牌",
+                    "value": "优衣库",
+                    "score": 0.5688
+                  },
+                  {
+                    "key": "服装面料偏好",
+                    "value": "纯棉",
+                    "score": 0.5527
+                  },
+                  {
+                    "key": "颜色偏好",
+                    "value": "白色、藏青色",
+                    "score": 0.4898
+                  },
+                  {
+                    "key": "服装风格",
+                    "value": "纯色基础款",
+                    "score": 0.4432
+                  },
+                  {
+                    "key": "服装尺码",
+                    "value": "M",
+                    "score": 0.4333
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "results": {
+    "overall": {
+      "passed": 5,
+      "total": 5
+    }
+  }
+}
